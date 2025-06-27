@@ -10,9 +10,9 @@ export interface Cookie {
 }
 
 export interface Product {
-  NAME: string;
-  DESC: string;
-  PRICE: number;
-  TAX: number;
-  TOTAL_ALONE: number;
+  name: string;
+  desc: string;
+  price: number;
+  tax: number;
+  totalAlone: number;
 }
