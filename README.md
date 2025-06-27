@@ -69,6 +69,22 @@ npm run test file_name.spec.ts
 - All test scenarios are located in the root or `tests/e2e` directory.
 - Each `.spec.ts` file contains one or more related test cases.
 
+### Reporting
+
+Playwright provides built-in reporting via the HTML reporter and trace viewer. For most test suites, these are sufficient, especially with trace capture enabled. For advanced CI integration or external reporting, custom or third-party reporters (like Allure or JSON + dashboard) can be used.
+
+config:
+- screenshots on failure
+- trace on first retry
+- html report does not open automatically
+- list -> clean console output 
+
+type
+```sh
+npx playwright show-report
+``` 
+to open reporter based on latest tests results
+
 ### TS Linting and Formatting
 
 ...in progress
