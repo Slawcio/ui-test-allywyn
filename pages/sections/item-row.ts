@@ -35,9 +35,9 @@ export default class ItemRow extends BasePage {
     }
 
     async assertDataAccuracy(productData: Product): Promise<void>{
-        expect(this.price).toContainText(productData.PRICE.toString());
-        expect(this.name).toContainText(productData.NAME);
-        expect(this.description).toContainText(productData.DESC);
+        expect(this.price).toContainText(productData.price.toString());
+        expect(this.name).toContainText(productData.name);
+        expect(this.description).toContainText(productData.desc);
     }
 
     async assertDataAccuracOnCart(productData: Product): Promise<void>{

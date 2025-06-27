@@ -4,7 +4,7 @@ import Inventory from '../../pages/inventory-page/inventory-page';
 import Product from '../../pages/product-page/product-page';
 import CheckoutPersonal from '../../pages/checkout-personal/checkout-personal';
 import CheckoutSummary from '../../pages/checkout-summary/checkout-summary';
-import { PRODUCT } from '../data/data';
+import { products } from '../data/data';
 import CheckoutComplete from '../../pages/checkout-complete-page/checkout-complete-page';
 import Cart from '../../pages/cart-page/cart-page';
 
@@ -15,12 +15,12 @@ test.describe('Buying tests', {tag: ['@buy-functionality']},() => {
   });
 
   test('user completes full checkout for one product and returns to inventory', {tag: ['@e2e','@buy-1-thingy']},async ({ page }) => {
-    const product = PRODUCT.BIKE_LIGHT;
+    const product = products.bikeLight;
 
     // inventory page
     const inventoryPage = new Inventory(page);
     await inventoryPage.assertAllPageLocatorsVisible();
-    const itemTitle = inventoryPage.itemByName(product.NAME);
+    const itemTitle = inventoryPage.itemByName(product.name);
     await itemTitle.click();
     expect(page.url()).toContain('inventory-item.html');
 
@@ -36,7 +36,7 @@ test.describe('Buying tests', {tag: ['@buy-functionality']},() => {
 
     // cart page
     const cartPage = new Cart(page);
-    const itemCart = await cartPage.itemByName(product.NAME);
+    const itemCart = await cartPage.itemByName(product.name);
     await itemCart.assertAllPageLocatorsVisible();
     await cartPage.checkoutButton.click();
 
@@ -49,12 +49,12 @@ test.describe('Buying tests', {tag: ['@buy-functionality']},() => {
     //checkout summary
     const checkoutSummary = new CheckoutSummary(page);
     await checkoutSummary.assertAllPageLocatorsVisible();
-    const itemSummary = await checkoutSummary.getItemByName(product.NAME);
+    const itemSummary = await checkoutSummary.getItemByName(product.name);
     await itemSummary.assertAllPageLocatorsVisible();
 
-    await expect(checkoutSummary.itemTotalCost).toContainText(product.PRICE.toString());
-    await expect(checkoutSummary.taxCost).toContainText(product.TAX.toString());
-    await expect(checkoutSummary.totalCost).toContainText(product.TOTAL_ALONE.toString());
+    await expect(checkoutSummary.itemTotalCost).toContainText(product.price.toString());
+    await expect(checkoutSummary.taxCost).toContainText(product.tax.toString());
+    await expect(checkoutSummary.totalCost).toContainText(product.totalAlone.toString());
 
     await checkoutSummary.finish.click();
 
