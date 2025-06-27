@@ -77,7 +77,6 @@ config:
 - screenshots on failure
 - trace on first retry
 - html report does not open automatically
-- list -> clean console output 
 
 type
 ```sh
