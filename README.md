@@ -90,10 +90,12 @@ to open reporter based on latest tests results
 
 - redirecting of burger menu and back buttons
 - personal checkout validations
-- storage-state for all test users -> enabling to run all of them
-- extract test users to .env probably (security)
-- some refactoring eg extracitng some of e2e buying process into `test.steps`
+- `storage-state` for all test users -> enabling to run all of them
+- extract test users to `.env` probably (security)
+- some refactoring eg extracting some of e2e buying process into `test.steps`
 - github actions
+- propose some e2e `*.spec.ts` files grouping
+- more wise `tag` management
 
 ### General folder mapping
 ```text
