@@ -7,17 +7,11 @@ import { Product } from "../../pages/dom-pages/product-pages/product-page";
 // TODO
 test.describe('visual regression tests', {tag: ['@visual', '@smoke']},() => {
 
-    const toHaveScreenshotConfig = {
-        threshold: 0.7,
-        maxDiffPixelRatio: 1,
-        maxDiffPixels: 10000,
-    }
-
     test('inventory page', async ({page}) => {
         await openPage(page, URLS.INVENTORY);
         const inventory = new Inventory(page);
         await inventory.assertAllPageLocatorsVisible();
-        await expect(inventory.root).toHaveScreenshot(toHaveScreenshotConfig);
+        await expect(inventory.root).toHaveScreenshot();
     });
 
     for(const product of Object.values(products)){
@@ -30,7 +24,7 @@ test.describe('visual regression tests', {tag: ['@visual', '@smoke']},() => {
             const productPage = new Product(page);
             productPage.assertAllPageLocatorsVisible();
 
-            await expect(productPage.root).toHaveScreenshot(toHaveScreenshotConfig);
+            await expect(productPage.root).toHaveScreenshot();
         });
     }
 
