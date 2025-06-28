@@ -1,8 +1,8 @@
 import { Locator, Page } from "@playwright/test";
-import { BasePage } from "../base-page";
-import { HeaderView } from "../header-view/header";
-import { PageContext, ProductType } from "../../types";
-import { ItemView } from "../item-view/item-view";
+import { BasePage } from "../../base-page";
+import { HeaderView } from "../../header-view/header";
+import { PageContext, ProductType } from "../../../types";
+import { ItemView } from "../../item-view/item-view";
 
 export class Product extends BasePage {
 

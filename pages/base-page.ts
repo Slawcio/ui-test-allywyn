@@ -27,10 +27,14 @@ export abstract class BasePage {
                 }       
             }
         }
-  }
+    }
     
     async waitForPageLoad(): Promise<void> {
         await this.page.waitForLoadState('networkidle');
+    }
+
+    get root(): Locator {
+        return this.page.locator('#root');
     }
 
 }

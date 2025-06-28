@@ -2,7 +2,8 @@ import { faker } from "@faker-js/faker";
 import { LoginOutcome, loginTestData } from "../data/data";
 import { test } from "@playwright/test";
 import { AuthPage}  from "../../pages/dom-pages/auth-page";
-import { Inventory } from "../../pages/dom-pages/inventory-page";
+import { Inventory } from "../../pages/dom-pages/product-pages/inventory-page";
+import { openPage } from "../common-steps/common-steps";
 
 const names = loginTestData.name;
 
@@ -16,12 +17,13 @@ const users = [
     { desc: "user locked", name: names.lockedOut, password: loginTestData.password, result: LoginOutcome.LOCKED },
 ];
 
-test.describe('Login tests - data driven', { tag: ['@login', '@all'] }, async () => {
+test.describe('Login tests - data driven', { tag: ['@auth-validation'] }, async () => {
+
     for (const user of users) {
         test(user.desc, async ({ page }) => {
-            const authPage = new AuthPage(page);
+            await openPage(page, '/');
 
-            await page.goto('/');
+            const authPage = new AuthPage(page);
             await authPage.assertAllPageLocatorsVisible();
             await test.step(`login attempt, expected ${user.result}`, async ()=> {
                 await authPage.login(user.name, user.password);

@@ -1,15 +1,16 @@
 import { test, expect } from '@playwright/test';
-import { addToCartItems, openPage } from '../common-steps/common-steps';
-import { Inventory } from '../../pages/dom-pages/inventory-page';
-import { Product } from '../../pages/dom-pages/product-page';
+import { openPage } from '../common-steps/common-steps';
+import { Inventory } from '../../pages/dom-pages/product-pages/inventory-page';
+import { Product } from '../../pages/dom-pages/product-pages/product-page';
 import { CheckoutPersonal } from '../../pages/dom-pages/checkout/checkout-personal-page';
 import { CheckoutSummary } from '../../pages/dom-pages/checkout/checkout-summary-page';
 import { products, URLS } from '../data/data';
 import { CheckoutComplete } from '../../pages/dom-pages/checkout/checkout-complete-page';
-import { Cart } from '../../pages/dom-pages/cart-page';
+import { Cart } from '../../pages/dom-pages/product-pages/cart-page';
 import { ParsedProduct } from '../data/product-scrap-object';
 import { ProductType } from '../../types';
 import { ItemView } from '../../pages/item-view/item-view';
+import { HeaderView } from '../../pages/header-view/header';
 
 test.describe('Buying tests', {tag: ['@buy-functionality']},() => {
   
@@ -75,7 +76,8 @@ test.describe('Buying tests', {tag: ['@buy-functionality']},() => {
   });
 
   test('add to cart 1-6 range items from inventory and check if products matches product card', async ({page})=> {
-    const addedItems = await addToCartItems(page, {range: [1, 6]});
+    const inventory = new Inventory(page); 
+    const addedItems = await inventory.addToCartItems({range: [1, 6]});
     const productView = new Product(page);
     for( const item of addedItems)
       await test.step(`Check product details for: ${await item.name.textContent()}`, async () => {
@@ -90,15 +92,16 @@ test.describe('Buying tests', {tag: ['@buy-functionality']},() => {
       })
   });
 
-  test(`complete full checkout for 
-    '${products.bikeLight.name}, ${products.jacket.name}, ${products.backpack.name}`, async ({page}) => {
+  test(
+    `complete full checkout for '${products.bikeLight.name}, ${products.jacket.name}, ${products.backpack.name}`,
+    async ({page}) => {
       const inventoryPage = new Inventory(page);
       await inventoryPage.assertAllPageLocatorsVisible();
 
       const productsList: ProductType[] = [products.bikeLight, products.jacket, products.backpack];
       const productNames: string[] = [products.bikeLight.name, products.jacket.name, products.backpack.name]
-      await addToCartItems(page, {names: productNames});
-      await inventoryPage.getShoppingCart.click();
+      await inventoryPage.addToCartItems({names: productNames});
+      await new HeaderView(page).shoppingCart.click();
 
       // checkout 1
       const cart = new Cart(page);

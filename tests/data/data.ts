@@ -11,7 +11,7 @@ export const URLS = {
 };
 
 export const errorText = {
-
+  // todo: extract here some error msges from tests implementation
 }
 
 export const loginTestData = {
@@ -32,6 +32,13 @@ export enum LoginOutcome {
     LOCKED = 'LOCKED',
     USERNAME_REQ = 'USERNAME_REQUIRED',
     PASSWORD_REQ = 'PASSWORD_REQUIRED'
+}
+
+export enum SortOption {
+  NameAsc = 'Name (A to Z)',
+  NameDesc = 'Name (Z to A)',
+  PriceAsc = 'Price (low to high)',
+  PriceDesc = 'Price (high to low)',
 }
 
 export const products: Record<string, ProductType> = {

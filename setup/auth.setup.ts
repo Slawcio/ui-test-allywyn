@@ -4,7 +4,7 @@ import { Cookie } from "../types";
 import path from "node:path";
 import * as dotenv from 'dotenv';
 import { AuthPage } from '../pages/dom-pages/auth-page';
-import { Inventory } from '../pages/dom-pages/inventory-page';
+import { Inventory } from '../pages/dom-pages/product-pages/inventory-page';
 import { loginTestData } from '../tests/data/data';
 dotenv.config();
 
