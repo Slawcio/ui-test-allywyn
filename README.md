@@ -3,14 +3,11 @@
 This repository contains automated end-to-end tests using [Playwright](https://playwright.dev/).  
 Test scenarios are organized in the following files:
 
-- Scenario 1: 
-
 Made for recruitment process as well as exploring some ideas:
-- page composition from sections
-- check all elements in base class
-- one export for utils, test data
+- page composition from reusable separate views
+- check all elements on page with one base method
 - seeking to minimize redundancy and reusability since the very beginning
-
+- visual regression
 - feel free to challange it ^
 
 ## Getting Started
@@ -39,7 +36,7 @@ Made for recruitment process as well as exploring some ideas:
 ### Setup .env file
 
 Use a .env file to store sensitive data (e.g., API keys, base URLs).
-This keeps credentials secure, allows easy env switching, and avoids hardcoding.
+This keeps credentials secure, allows easy env switching, and avoids hardcoding vulnerable data
 
 ### Running Tests
 
@@ -76,7 +73,7 @@ Playwright provides built-in reporting via the HTML reporter and trace viewer. F
 config:
 - screenshots on failure
 - trace on first retry
-- html report does not open automatically
+- html report does not open after `npx run playwright`
 
 type
 ```sh
@@ -95,5 +92,27 @@ to open reporter based on latest tests results
 - personal checkout validations
 - storage-state for all test users -> enabling to run all of them
 - extract test users to .env probably (security)
-- some refactoring eg some buying steps into test.steps
+- some refactoring eg extracitng some of e2e buying process into `test.steps`
 - github actions
+
+### General folder mapping
+```text
+.
+├── _auth/                      # Auth-related artifacts
+├── node_modules/               # Node.js dependencies
+├── pages/                      # Page Object Model structure
+├── playwright-report/          # Playwright test reports
+├── setup/                      # Test setup routines
+├── test-results/               # Output artifacts
+├── tests/                      # Main test suite
+│   ├── common-steps/           # Reusable test steps
+│   ├── data/                   # Test data sources
+│   ├── e2e/                    # Full end-to-end test scenarios
+│   └── visual-regression.spec.ts-snapshots/ # Snapshot files
+├── utils/                      # Utility functions
+├── .env                        # Environment config
+├── .env.example                # Sample env file
+├── playwright.config.ts       # Playwright configuration
+├── tsconfig.json              # TypeScript compiler config
+└── types.ts                   # Shared types/interfaces
+```
