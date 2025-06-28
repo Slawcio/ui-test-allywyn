@@ -50,16 +50,17 @@ npm run test
 To run with tags
 ```sh
 npx playwright test --grep @my_tag
-#or
-npm run test --grep @my_tag
 ```
 
 To run a specific scenario:
 ```sh
 npx playwright test file_name.spec.ts
-#or
-npm run test file_name.spec.ts
 ```
+
+Update visual comparison snapshots
+```sh
+ npx playwright test -u
+ ```
 
 ### Test Structure
 

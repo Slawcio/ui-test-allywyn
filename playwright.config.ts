@@ -1,7 +1,14 @@
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig, devices, expect } from '@playwright/test';
 import dotenv from 'dotenv';
 dotenv.config();
 
+expect.configure({
+  toHaveScreenshot: {
+    maxDiffPixelRatio: 0.01, // allow 1% difference
+    animations: 'disabled',
+    fullPage: true
+  }
+});
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -22,12 +29,25 @@ export default defineConfig({
   /* Retry 1 time only just in case */
   retries: 1,
   /* Opt out of parallel tests on CI. */
-  workers: undefined, // PW should adjust the numbers of workers based on available CPU cores
+  workers: process.env.CI ? 4 : undefined, //
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
     ['html', { open: 'never' }],
     ['json', { outputFile: 'playwright-report/report.json' }]
-],
+  ],
+  snapshotPathTemplate: 'tests/e2e/snapshots/{projectName}/{testFilePath}/{arg}{ext}',
+   expect: {
+    toHaveScreenshot: {
+      threshold: 0.25,
+      maxDiffPixelRatio: 0.025,
+      maxDiffPixels: 25,
+    },
+    toMatchSnapshot: {
+      threshold: 0.25,
+      maxDiffPixelRatio: 0.025,
+      maxDiffPixels: 25,
+    }
+  },
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
@@ -36,7 +56,7 @@ export default defineConfig({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
-    viewport: { width: 1280, height: 720 }
+    viewport: { width: 1280, height: 720 },
   },
 
   /* Configure projects for major browsers */

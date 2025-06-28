@@ -24,16 +24,21 @@ jobs:
         with:
           path: |
             node_modules
-            ~/.cache/ms-playwright
           key: node-modules-${{ hashFiles('package-lock.json') }}
 
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
 
       - name: Install dependencies
         if: steps.node_cache.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Install Playwright browsers
-        if: steps.node_cache.outputs.cache-hit != 'true'
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps
 
       - name: Create .env file
@@ -47,5 +52,5 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-report-${{ matrix.browser }}
+          name: playwright-report
           path: playwright-report

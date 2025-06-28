@@ -7,3 +7,6 @@ node_modules/
 /playwright/.cache/
 .auth/storage*
 .env
+*-diff.png
+*-actual.png
+*-expected.png
