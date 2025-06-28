@@ -122,7 +122,6 @@ test.describe('Buying tests', {tag: ['@buy-functionality', '@smoke']},() => {
       // checkout summary
       const checkoutSummary = new CheckoutSummary(page);
       const summaryItemList: ItemView[] = await checkoutSummary.getItemsList(); 
-      console.log('summaryItemList: ', summaryItemList);
       for(let i = 0; i < summaryItemList.length; i++){
         await summaryItemList[0].assertProductDataAccuracyInRow(productsList[0]);
       }
