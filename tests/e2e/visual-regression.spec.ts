@@ -5,7 +5,7 @@ import { Inventory } from "../../pages/dom-pages/product-pages/inventory-page";
 import { Product } from "../../pages/dom-pages/product-pages/product-page";
 
 // TODO
-test.describe('visual regression tests', {tag: ['@visual']},() => {
+test.describe('visual regression tests', {tag: ['@visual', '@smoke']},() => {
 
     test('inventory page', async ({page}) => {
         await openPage(page, URLS.INVENTORY);

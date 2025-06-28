@@ -12,7 +12,7 @@ import { ProductType } from '../../types';
 import { ItemView } from '../../pages/item-view/item-view';
 import { HeaderView } from '../../pages/header-view/header';
 
-test.describe('Buying tests', {tag: ['@buy-functionality']},() => {
+test.describe('Buying tests', {tag: ['@buy-functionality', '@smoke']},() => {
   
   test.beforeEach(async ({ page }) => {
     await openPage(page, '/inventory.html');
