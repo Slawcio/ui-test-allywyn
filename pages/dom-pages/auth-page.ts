@@ -1,7 +1,7 @@
-import test, { expect, Page } from "@playwright/test";
-import BasePage from "../base-page";
+import { test, expect, Page } from "@playwright/test";
+import { BasePage } from "../base-page";
 
-export default class AuthPage extends BasePage {
+export class AuthPage extends BasePage {
 
     
     constructor(page: Page) {

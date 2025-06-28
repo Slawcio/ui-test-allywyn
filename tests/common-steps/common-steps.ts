@@ -1,7 +1,7 @@
 import { expect, Page } from "@playwright/test";
-import Inventory from "../../pages/inventory-page/inventory-page";
-import Header from "../../pages/header/header";
-import ItemView from "../../pages/item-view/item-view";
+import { Inventory } from "../../pages/dom-pages/inventory-page";
+import { HeaderView } from "../../pages/header-view/header";
+import { ItemView } from "../../pages/item-view/item-view";
 import { PurchaseOptions } from "../../types";
 
 export const openPage = async (page: Page, url = '/'): Promise<void> => {
@@ -11,7 +11,7 @@ export const openPage = async (page: Page, url = '/'): Promise<void> => {
 
 export async function addToCartItems(page: Page, options: PurchaseOptions): Promise<ItemView[]> {
     const inventory = new Inventory(page);
-    const header = new Header(page);
+    const header = new HeaderView(page);
 
     await inventory.assertAllPageLocatorsVisible();
     const allItems = await inventory.getItemsList(); // get all visible items

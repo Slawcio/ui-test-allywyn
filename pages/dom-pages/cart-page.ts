@@ -1,9 +1,9 @@
 import { Page, Locator } from '@playwright/test';
-import BasePage from '../base-page';
-import ItemView from '../item-view/item-view';
+import { BasePage } from '../base-page';
+import { ItemView } from '../item-view/item-view';
 import { PageContext } from '../../types';
 
-export default class Cart extends BasePage {
+export class Cart extends BasePage {
 
     constructor(page: Page) {
       super(page);

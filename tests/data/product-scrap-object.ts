@@ -1,4 +1,4 @@
-import ItemView from "../../pages/item-view/item-view";
+import { ItemView } from "../../pages/item-view/item-view";
 
 export class ParsedProduct {
 

@@ -1,8 +1,8 @@
 import { faker } from "@faker-js/faker";
 import { LoginOutcome, loginTestData } from "../data/data";
-import test from "@playwright/test";
-import AuthPage from "../../pages/auth-page/auth-page";
-import Inventory from "../../pages/inventory-page/inventory-page";
+import { test } from "@playwright/test";
+import { AuthPage}  from "../../pages/dom-pages/auth-page";
+import { Inventory } from "../../pages/dom-pages/inventory-page";
 
 const names = loginTestData.name;
 

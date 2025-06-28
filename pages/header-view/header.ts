@@ -1,14 +1,14 @@
 import { Locator, Page } from "@playwright/test";
-import BasePage from "../base-page";
+import { BasePage } from "../base-page";
 
-export default class Header extends BasePage {
+export class HeaderView extends BasePage {
 
     constructor(protected readonly page: Page) {
         super(page);
     }
 
     static getHeader(page: Page){
-        return new Header(page);
+        return new HeaderView(page);
     }
   
     get header(): Locator { return this.page.locator("[data-test=primary-header]"); }

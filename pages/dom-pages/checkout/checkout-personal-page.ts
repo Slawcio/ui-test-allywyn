@@ -1,13 +1,12 @@
 import { Page, Locator } from '@playwright/test';
-import { fa, faker } from '@faker-js/faker';
-import BasePage from '../base-page';
+import { faker } from '@faker-js/faker';
+import { BasePage } from '../../base-page';
 
-export default class CheckoutPersonal extends BasePage {
-
-    static override readonly skipVisibilityCheck = ['errorMsg'];
+export class CheckoutPersonal extends BasePage {
 
     constructor(page: Page) {
-      super(page);
+      const skipVisibilityCheck = ['errorMsg', 'errorButton']
+      super(page, skipVisibilityCheck);
     }
 
     get firstName(): Locator { return this.page.locator('[data-test="firstName"]'); }
@@ -17,10 +16,10 @@ export default class CheckoutPersonal extends BasePage {
     get continue(): Locator { return this.page.locator('[data-test="continue"]'); }
 
     // // error popup info
-    // get errorMsg(): Locator { return this.page.locator('[data-test="error"]'); }
-    // get errorButton(): Locator { return this.page.locator('[data-test="error-button"]'); }
+    get errorMsg(): Locator { return this.page.locator('[data-test="error"]'); }
+    get errorButton(): Locator { return this.page.locator('[data-test="error-button"]'); }
 
-    async fillCorrectData() {
+    async fillPersonalInfo() {
       await this.firstName.fill(faker.internet.email());
       await this.lastName.fill(faker.person.lastName());
       await this.postalCode.fill(faker.location.zipCode());

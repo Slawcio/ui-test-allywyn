@@ -3,8 +3,8 @@ import * as fs from 'fs';
 import { Cookie } from "../types";
 import path from "node:path";
 import * as dotenv from 'dotenv';
-import LoginPage from '../pages/auth-page/auth-page';
-import Inventory from '../pages/inventory-page/inventory-page';
+import { AuthPage } from '../pages/dom-pages/auth-page';
+import { Inventory } from '../pages/dom-pages/inventory-page';
 import { loginTestData } from '../tests/data/data';
 dotenv.config();
 
@@ -12,7 +12,7 @@ const browser_state_file_path = path.join(__dirname, '../.auth/storage-state.jso
 
 const authenticate = async (page: Page) => {
         await page.goto('/');
-        const loginPage = new LoginPage(page);
+        const loginPage = new AuthPage(page);
         await loginPage.login(loginTestData.name.standard, loginTestData.password);
         expect(page.url()).toContain('inventory.html');
         await page.waitForLoadState('networkidle');

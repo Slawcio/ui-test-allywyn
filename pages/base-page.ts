@@ -1,6 +1,6 @@
 import { Page, Locator, expect, test } from "@playwright/test";
 
-export default abstract class BasePage {
+export abstract class BasePage {
     [key: string]: unknown;
 
     protected readonly page: Page;

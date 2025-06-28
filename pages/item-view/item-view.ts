@@ -1,10 +1,10 @@
 import { Page, Locator, expect, test } from '@playwright/test';
-import BasePage from '../base-page';
+import { BasePage } from '../base-page';
 import { PageContext, ProductType } from '../../types';
 import { ParsedProduct } from '../../tests/data/product-scrap-object';
 
-// item on product page, checkout pagese
-export default class ItemView extends BasePage {
+// general ItemView and properties on Inventory, Product, Cart, Checkouts pages 
+export class ItemView extends BasePage {
 
 
     private static readonly itemSelector = '[data-test="inventory-item"]';

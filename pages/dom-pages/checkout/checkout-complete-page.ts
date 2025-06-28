@@ -1,7 +1,7 @@
 import { Page, Locator } from '@playwright/test';
-import BasePage from '../base-page';
+import { BasePage } from '../../base-page';
 
-export default class CheckoutComplete extends BasePage {
+export class CheckoutComplete extends BasePage {
 
     constructor(page: Page) {
       super(page);

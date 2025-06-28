@@ -1,15 +1,15 @@
 import { test, expect } from '@playwright/test';
 import { addToCartItems, openPage } from '../common-steps/common-steps';
-import Inventory from '../../pages/inventory-page/inventory-page';
-import Product from '../../pages/product-page/product-page';
-import CheckoutPersonal from '../../pages/checkout-personal/checkout-personal';
-import CheckoutSummary from '../../pages/checkout-summary/checkout-summary';
+import { Inventory } from '../../pages/dom-pages/inventory-page';
+import { Product } from '../../pages/dom-pages/product-page';
+import { CheckoutPersonal } from '../../pages/dom-pages/checkout/checkout-personal-page';
+import { CheckoutSummary } from '../../pages/dom-pages/checkout/checkout-summary-page';
 import { products, URLS } from '../data/data';
-import CheckoutComplete from '../../pages/checkout-complete-page/checkout-complete-page';
-import Cart from '../../pages/cart-page/cart-page';
+import { CheckoutComplete } from '../../pages/dom-pages/checkout/checkout-complete-page';
+import { Cart } from '../../pages/dom-pages/cart-page';
 import { ParsedProduct } from '../data/product-scrap-object';
 import { ProductType } from '../../types';
-import ItemView from '../../pages/item-view/item-view';
+import { ItemView } from '../../pages/item-view/item-view';
 
 test.describe('Buying tests', {tag: ['@buy-functionality']},() => {
   
@@ -37,8 +37,8 @@ test.describe('Buying tests', {tag: ['@buy-functionality']},() => {
     await expect(productItem.addToCartButton).toBeHidden();
     await expect(productItem.removeButton).toBeVisible();
     
-    expect(productPage.headerObject.shoppingCartBadge).toHaveText('1');
-    await productPage.headerObject.shoppingCart.click();
+    expect(productPage.header.shoppingCartBadge).toHaveText('1');
+    await productPage.header.shoppingCart.click();
 
     // cart page
     const cartPage = new Cart(page);
@@ -49,7 +49,7 @@ test.describe('Buying tests', {tag: ['@buy-functionality']},() => {
     // checkout personal information
     const checkoutPersonal = new CheckoutPersonal(page);
     await checkoutPersonal.assertAllPageLocatorsVisible();
-    await checkoutPersonal.fillCorrectData();
+    await checkoutPersonal.fillPersonalInfo();
     await checkoutPersonal.continue.click();
 
     //checkout summary
@@ -71,7 +71,7 @@ test.describe('Buying tests', {tag: ['@buy-functionality']},() => {
 
     expect(page.url()).toContain(URLS.INVENTORY)
     await inventoryPage.assertAllPageLocatorsVisible();
-    await expect(productPage.headerObject.shoppingCartBadge).toBeHidden();
+    await expect(productPage.header.shoppingCartBadge).toBeHidden();
   });
 
   test('add to cart 1-6 range items from inventory and check if products matches product card', async ({page})=> {
@@ -113,7 +113,7 @@ test.describe('Buying tests', {tag: ['@buy-functionality']},() => {
       
       // checkout 2
       const personalCheckout = new CheckoutPersonal(page);
-      await personalCheckout.fillCorrectData();
+      await personalCheckout.fillPersonalInfo();
       await personalCheckout.continue.click();
 
       // checkout summary
