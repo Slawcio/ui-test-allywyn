@@ -30,13 +30,13 @@ export default defineConfig({
     process.env.CI ? ['github'] : ['line'],
     // ['json', { outputFile: 'playwright-report/report.json' }] // might be needed for integrations
   ],
-  snapshotPathTemplate: 'tests/e2e/snapshots/{projectName}/{testFilePath}/{arg}{ext}',
+  snapshotPathTemplate: '.tests/snapshots/{projectName}/{testFilePath}/{arg}{ext}',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   expect: {
     toHaveScreenshot: {
-      threshold: 0.7,
-      maxDiffPixelRatio: 1,
-      maxDiffPixels: 10000,    
+      threshold: 0.3,
+      maxDiffPixelRatio: 0.03,
+      maxDiffPixels: 50,    
     }
   },
   use: {
