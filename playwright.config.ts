@@ -22,7 +22,7 @@ export default defineConfig({
   /* Retry 1 time only just in case */
   retries: 1,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
+  workers: undefined, // PW should adjust the numbers of workers based on available CPU cores
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
     ['html', { open: 'never' }],
@@ -35,7 +35,8 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
-    screenshot: 'only-on-failure'
+    screenshot: 'only-on-failure',
+    viewport: { width: 1280, height: 720 }
   },
 
   /* Configure projects for major browsers */
