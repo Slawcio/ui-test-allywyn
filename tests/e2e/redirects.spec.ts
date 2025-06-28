@@ -1,7 +1,7 @@
 import test from "@playwright/test";
 
 // TODO
-test.describe('redirects', {tag: ['@redirects']},() => {
+test.describe.skip('redirects', {tag: ['@redirects']},() => {
   
   test.beforeEach(async ({ page }) => {
   });

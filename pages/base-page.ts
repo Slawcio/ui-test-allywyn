@@ -33,4 +33,8 @@ export abstract class BasePage {
         await this.page.waitForLoadState('networkidle');
     }
 
+    get root(): Locator {
+        return this.page.locator('#root');
+    }
+
 }

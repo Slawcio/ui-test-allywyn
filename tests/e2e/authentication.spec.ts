@@ -17,7 +17,7 @@ const users = [
     { desc: "user locked", name: names.lockedOut, password: loginTestData.password, result: LoginOutcome.LOCKED },
 ];
 
-test.describe('Login tests - data driven', { tag: ['@login', '@all'] }, async () => {
+test.describe('Login tests - data driven', { tag: ['@auth-validation'] }, async () => {
 
     for (const user of users) {
         test(user.desc, async ({ page }) => {

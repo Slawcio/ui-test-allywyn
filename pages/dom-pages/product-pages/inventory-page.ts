@@ -86,14 +86,14 @@ export class Inventory extends BasePage {
 
             case SortOption.PriceAsc: {
             const prices = await Promise.all(allItems.map(item => item.price.textContent()));
-            const parsed = prices.map(p => parseFloat(p?.replace(/[^\d.]/g, '') || '0'));
+            const parsed = prices.map(p => parseFloat(p?.replace(/[^\d.]/g, '') || '0')); // [^\d.] removes anything except digits (0–9) and periods 'g' -> globally
             expect([...parsed].sort((a, b) => a - b)).toEqual(parsed);
             break;
             }
 
             case SortOption.PriceDesc: {
             const prices = await Promise.all(allItems.map(item => item.price.textContent()));
-            const parsed = prices.map(p => parseFloat(p?.replace(/[^\d.]/g, '') || '0'));
+            const parsed = prices.map(p => parseFloat(p?.replace(/[^\d.]/g, '') || '0')); // [^\d.] removes anything except digits (0–9) and periods 'g' -> globally
             expect([...parsed].sort((a, b) => b - a)).toEqual(parsed);
             break;
             }

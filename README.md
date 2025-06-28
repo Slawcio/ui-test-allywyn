@@ -87,3 +87,13 @@ to open reporter based on latest tests results
 ### TS Linting and Formatting
 
 ...in progress
+
+
+### What left to do:
+
+- redirecting of burger menu and back buttons
+- personal checkout validations
+- storage-state for all test users -> enabling to run all of them
+- extract test users to .env probably (security)
+- some refactoring eg some buying steps into test.steps
+- github actions
