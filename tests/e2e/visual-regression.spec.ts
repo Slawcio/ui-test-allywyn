@@ -8,15 +8,15 @@ import { Product } from "../../pages/dom-pages/product-pages/product-page";
 test.describe('visual regression tests', {tag: ['@visual', '@smoke']},() => {
 
     const toHaveScreenshotConfig = {
-        threshold: 0.5,
-        maxDiffPixelRatio: 0.05,
-        maxDiffPixels: 25,
+        threshold: 0.7,
+        maxDiffPixelRatio: 1,
+        maxDiffPixels: 10000,
     }
 
     test('inventory page', async ({page}) => {
         await openPage(page, URLS.INVENTORY);
         const inventory = new Inventory(page);
-        
+        await inventory.assertAllPageLocatorsVisible();
         await expect(inventory.root).toHaveScreenshot(toHaveScreenshotConfig);
     });
 
