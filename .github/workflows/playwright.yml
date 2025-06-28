@@ -60,7 +60,7 @@ jobs:
           echo "ENV=${{ secrets.ENV }}" >> .env
 
       - name: Run smoke tests on all browsers
-        run: npx playwright test --grep @smoke
+        run: npx playwright test --grep @smoke --update-snapshots --reporter html
 
       - name: Upload Playwright report
         if: always()
