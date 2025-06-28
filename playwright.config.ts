@@ -2,13 +2,6 @@ import { defineConfig, devices, expect } from '@playwright/test';
 import dotenv from 'dotenv';
 dotenv.config();
 
-expect.configure({
-  toHaveScreenshot: {
-    maxDiffPixelRatio: 0.01, // allow 1% difference
-    animations: 'disabled',
-    fullPage: true
-  }
-});
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -20,6 +13,7 @@ expect.configure({
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
+
 export default defineConfig({
   testDir: './tests/e2e',
   /* Run tests in files in parallel */
@@ -36,7 +30,7 @@ export default defineConfig({
     ['json', { outputFile: 'playwright-report/report.json' }]
   ],
   snapshotPathTemplate: 'tests/e2e/snapshots/{projectName}/{testFilePath}/{arg}{ext}',
-   expect: {
+  expect: {
     toHaveScreenshot: {
       threshold: 0.3,
       maxDiffPixelRatio: 0.025,
