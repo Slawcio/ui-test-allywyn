@@ -10,3 +10,4 @@ node_modules/
 *-diff.png
 *-actual.png
 *-expected.png
+.test/

@@ -27,7 +27,8 @@ export default defineConfig({
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
     ['html', { open: 'never' }],
-    ['json', { outputFile: 'playwright-report/report.json' }]
+    process.env.CI ? ['github'] : ['line'],
+    // ['json', { outputFile: 'playwright-report/report.json' }] // might be needed for integrations
   ],
   snapshotPathTemplate: 'tests/e2e/snapshots/{projectName}/{testFilePath}/{arg}{ext}',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
