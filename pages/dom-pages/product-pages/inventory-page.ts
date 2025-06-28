@@ -3,6 +3,7 @@ import { BasePage } from '../../base-page';
 import { HeaderView } from '../../header-view/header';
 import { ItemView } from '../../item-view/item-view';
 import { PageContext, PurchaseOptions } from '../../../types';
+import { SortOption } from '../../../tests/data/data';
 
 export class Inventory extends BasePage {
 
@@ -57,9 +58,49 @@ export class Inventory extends BasePage {
         
         for(const item of itemsToRemove){
             await item.removeButton.click();
-            expect(item.addToCartButton).toBeVisible();
+            await expect(item.addToCartButton).toBeVisible();
         }
-                await header.assertAmountOnCart(0);
+        await header.assertAmountOnCart(0);
+    }
+
+    async selectSortOption(sortOption: string){
+        await this.filterDropdown.selectOption( sortOption )
+    }
+
+    async assertSortingCorrect(sortName: string){
+        const allItems = await this.getItemsList();
+         switch (sortName) {
+            case SortOption.NameAsc: {
+            const names = await Promise.all(allItems.map(item => item.name.textContent()));
+            const cleaned = names.map(n => n?.trim() || '');
+            expect([...cleaned].sort()).toEqual(cleaned);
+            break;
+            }
+
+            case SortOption.NameDesc: {
+            const names = await Promise.all(allItems.map(item => item.name.textContent()));
+            const cleaned = names.map(n => n?.trim() || '');
+            expect([...cleaned].sort().reverse()).toEqual(cleaned);
+            break;
+            }
+
+            case SortOption.PriceAsc: {
+            const prices = await Promise.all(allItems.map(item => item.price.textContent()));
+            const parsed = prices.map(p => parseFloat(p?.replace(/[^\d.]/g, '') || '0'));
+            expect([...parsed].sort((a, b) => a - b)).toEqual(parsed);
+            break;
+            }
+
+            case SortOption.PriceDesc: {
+            const prices = await Promise.all(allItems.map(item => item.price.textContent()));
+            const parsed = prices.map(p => parseFloat(p?.replace(/[^\d.]/g, '') || '0'));
+            expect([...parsed].sort((a, b) => b - a)).toEqual(parsed);
+            break;
+            }
+
+            default:
+            throw new Error(`Unsupported sorting option: ${sortName}`);
+        }
     }
 
     get inventoryContainer(): Locator { return this.page.locator('[data-test="inventory-container"]'); }
