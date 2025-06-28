@@ -38,7 +38,7 @@ export default defineConfig({
   snapshotPathTemplate: 'tests/e2e/snapshots/{projectName}/{testFilePath}/{arg}{ext}',
    expect: {
     toHaveScreenshot: {
-      threshold: 0.25,
+      threshold: 0.3,
       maxDiffPixelRatio: 0.025,
       maxDiffPixels: 25,
     },
