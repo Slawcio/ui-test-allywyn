@@ -1,4 +1,4 @@
-import { Product } from "../../types"
+import { ProductType } from "../../types"
 
 export const URLS = {
   INVENTORY: '/inventory.html',
@@ -34,20 +34,30 @@ export enum LoginOutcome {
     PASSWORD_REQ = 'PASSWORD_REQUIRED'
 }
 
-export const products: Record<string, Product> = {
+export const products: Record<string, ProductType> = {
     bikeLight: {
         name: "Sauce Labs Bike Light",
         desc: "A red light isn't the desired state in testing but it sure helps when riding your bike at night. Water-resistant with 3 lighting modes, 1 AAA battery included.",
         price: 9.99,
         tax: 0.8,
-        totalAlone: 10.79
+        totalAlone: 10.79,
+        imgSrc: "/static/media/bike-light-1200x1500.37c843b0.jpg"
     },
     backpack: {
         name: "Sauce Labs Backpack",
         desc: "carry.allTheThings() with the sleek, streamlined Sly Pack that melds uncompromising style with unequaled laptop and tablet protection.",
         price: 29.99,
         tax: 2.40,
-        totalAlone: 32.39
+        totalAlone: 32.39,
+        imgSrc: "/static/media/sauce-backpack-1200x1500.0a0b85a3.jpg"
+    },
+    jacket: {
+        name: "Sauce Labs Fleece Jacket",
+        desc: "It's not every day that you come across a midweight quarter-zip fleece jacket capable of handling everything from a relaxing day outdoors to a busy day at the office.",
+        price: 49.99,
+        tax: 4,
+        totalAlone: 53.99,
+        imgSrc: "/static/media/sauce-pullover-1200x1500.51d7ffaf.jpg"
     }
     //... more to be added if necessary
 }

@@ -4,16 +4,16 @@ export default abstract class BasePage {
     [key: string]: unknown;
 
     protected readonly page: Page;
+    protected readonly skipVisibility?: string[]
     
-    constructor(page: Page) {
+    constructor(page: Page, skipVisibility ?: string[]) {
         this.page = page;
+        this.skipVisibility = skipVisibility;
     }
-
-    static readonly skipVisibilityCheck: string[] = [];
 
     async assertAllPageLocatorsVisible(): Promise<void> {
         const props = Object.getOwnPropertyDescriptors(Object.getPrototypeOf(this));
-        const skipList = (this.constructor as typeof BasePage).skipVisibilityCheck;
+        const skipList = this.skipVisibility ?? [];
 
         for (const [locatorName, descriptor] of Object.entries(props)) {
             if (typeof descriptor.get === 'function' && !skipList.includes(locatorName)) {

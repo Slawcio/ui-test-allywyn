@@ -1,6 +1,7 @@
 import { Page, Locator } from '@playwright/test';
 import BasePage from '../base-page';
-import ItemRow from '../sections/item-row';
+import ItemView from '../item-view/item-view';
+import { PageContext } from '../../types';
 
 export default class CheckoutSummary extends BasePage {
 
@@ -8,9 +9,9 @@ export default class CheckoutSummary extends BasePage {
       super(page);
     }
 
-    async getItemByName(name: string): Promise<ItemRow> { return ItemRow.itemRowByName(this.page, name); }
+    async getItemByName(name: string): Promise<ItemView> { return await ItemView.getItemByName(this.page, name, PageContext.Summary); }
 
-    async getItemsList(): Promise<ItemRow[]> { return ItemRow.itemRows(this.page); }
+    async getItemsList(): Promise<ItemView[]> { return await ItemView.getItems(this.page, PageContext.Summary); }
 
     get paymentInfoLabel(): Locator { return this.page.locator('[data-test=payment-info-label]'); }
     get paymentInfoValue(): Locator { return this.page.locator('[data-test=payment-info-value]'); }

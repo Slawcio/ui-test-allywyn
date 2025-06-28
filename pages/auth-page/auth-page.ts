@@ -3,10 +3,10 @@ import BasePage from "../base-page";
 
 export default class AuthPage extends BasePage {
 
-    static override skipVisibilityCheck: string[] = ['errorLabel', 'errorCloseButton'];
     
     constructor(page: Page) {
-        super(page);
+        const skipVisibilityCheck: string[] = ['errorLabel', 'errorCloseButton'];
+        super(page, skipVisibilityCheck);
     }
     
     get usernameInput() { return this.page.locator('[data-test="username"]');}

@@ -6,6 +6,10 @@ export default class Header extends BasePage {
     constructor(protected readonly page: Page) {
         super(page);
     }
+
+    static getHeader(page: Page){
+        return new Header(page);
+    }
   
     get header(): Locator { return this.page.locator("[data-test=primary-header]"); }
     get shoppingCart(): Locator { return this.page.locator("[data-test=shopping-cart-link]"); }

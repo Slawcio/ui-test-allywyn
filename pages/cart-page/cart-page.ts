@@ -1,6 +1,7 @@
 import { Page, Locator } from '@playwright/test';
 import BasePage from '../base-page';
-import ItemRow from '../sections/item-row';
+import ItemView from '../item-view/item-view';
+import { PageContext } from '../../types';
 
 export default class Cart extends BasePage {
 
@@ -11,11 +12,11 @@ export default class Cart extends BasePage {
     get continueShoppingButton(): Locator { return this.page.locator('[data-test="continue-shopping"]'); }
     get checkoutButton(): Locator { return this.page.locator('[data-test="checkout"]'); }
 
-    async itemByName(name: string): Promise<ItemRow> { 
-        return await ItemRow.itemRowByName(this.page, name);
+    async itemByName(name: string): Promise<ItemView> { 
+        return await ItemView.getItemByName(this.page, name, PageContext.Cart);
     }
 
-    async getItemsList(): Promise<ItemRow[]> {
-        return await ItemRow.itemRows(this.page);
+    async getItemsList(): Promise<ItemView[]> {
+        return await ItemView.getItems(this.page, PageContext.Cart);
     }
 }

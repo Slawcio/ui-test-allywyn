@@ -1,35 +1,41 @@
 import { test, expect } from '@playwright/test';
-import commonSteps from '../common-steps/common-steps';
+import { addToCartItems, openPage } from '../common-steps/common-steps';
 import Inventory from '../../pages/inventory-page/inventory-page';
 import Product from '../../pages/product-page/product-page';
 import CheckoutPersonal from '../../pages/checkout-personal/checkout-personal';
 import CheckoutSummary from '../../pages/checkout-summary/checkout-summary';
-import { products } from '../data/data';
+import { products, URLS } from '../data/data';
 import CheckoutComplete from '../../pages/checkout-complete-page/checkout-complete-page';
 import Cart from '../../pages/cart-page/cart-page';
+import { ParsedProduct } from '../data/product-scrap-object';
+import { ProductType } from '../../types';
+import ItemView from '../../pages/item-view/item-view';
 
 test.describe('Buying tests', {tag: ['@buy-functionality']},() => {
   
   test.beforeEach(async ({ page }) => {
-    await commonSteps.openPage(page, '/inventory.html');
+    await openPage(page, '/inventory.html');
   });
 
-  test('user completes full checkout for one product and returns to inventory', {tag: ['@e2e','@buy-1-thingy']},async ({ page }) => {
+  test(`complete full checkout for ${products.bikeLight.name} and return to inventory`, {tag: ['@e2e','@buy-1-thingy']},async ({ page }) => {
     const product = products.bikeLight;
 
     // inventory page
     const inventoryPage = new Inventory(page);
     await inventoryPage.assertAllPageLocatorsVisible();
-    const itemTitle = inventoryPage.itemByName(product.name);
-    await itemTitle.click();
-    expect(page.url()).toContain('inventory-item.html');
+    const itemInventory = await inventoryPage.itemByName(product.name);
+    await itemInventory.name.click();
+    expect(page.url()).toContain(URLS.PRODUCT);
 
     // product page
     const productPage = new Product(page);
     await productPage.assertAllPageLocatorsVisible();
-    await productPage.addToCartButton.click();
-    await expect(productPage.addToCartButton).toBeHidden();
-    await expect(productPage.removeButton).toBeVisible();
+    const productItem = await productPage.getItem();
+    await productItem.assertAllPageLocatorsVisible();
+    await productItem.assertProductDataAccuracyInRow(product);
+    await productItem.addToCartButton.click();
+    await expect(productItem.addToCartButton).toBeHidden();
+    await expect(productItem.removeButton).toBeVisible();
     
     expect(productPage.headerObject.shoppingCartBadge).toHaveText('1');
     await productPage.headerObject.shoppingCart.click();
@@ -63,9 +69,66 @@ test.describe('Buying tests', {tag: ['@buy-functionality']},() => {
     await checkoutCompletePage.assertAllPageLocatorsVisible();
     await checkoutCompletePage.backHomeButton.click();
 
-    expect(page.url()).toContain('inventory.html')
+    expect(page.url()).toContain(URLS.INVENTORY)
     await inventoryPage.assertAllPageLocatorsVisible();
     await expect(productPage.headerObject.shoppingCartBadge).toBeHidden();
+  });
+
+  test('add to cart 1-6 range items from inventory and check if products matches product card', async ({page})=> {
+    const addedItems = await addToCartItems(page, {range: [1, 6]});
+    const productView = new Product(page);
+    for( const item of addedItems)
+      await test.step(`Check product details for: ${await item.name.textContent()}`, async () => {
+        const scrapped = await ParsedProduct.fromInventoryItem(item);
+        await item.img.click();
+        const productItem = await productView.getItem();
+        await productItem.assertProductDataFromInventory(scrapped);
+        await expect(productItem.removeButton).toBeVisible();
+        await expect(productItem.removeButton).toBeEnabled();
+        await productView.backToInventory.click();
+        await expect(item.img).toBeVisible();
+      })
+  });
+
+  test(`complete full checkout for 
+    '${products.bikeLight.name}, ${products.jacket.name}, ${products.backpack.name}`, async ({page}) => {
+      const inventoryPage = new Inventory(page);
+      await inventoryPage.assertAllPageLocatorsVisible();
+
+      const productsList: ProductType[] = [products.bikeLight, products.jacket, products.backpack];
+      const productNames: string[] = [products.bikeLight.name, products.jacket.name, products.backpack.name]
+      await addToCartItems(page, {names: productNames});
+      await inventoryPage.getShoppingCart.click();
+
+      // checkout 1
+      const cart = new Cart(page);
+      await cart.assertAllPageLocatorsVisible();
+      const itemRowList: ItemView[] = await cart.getItemsList();
+      
+      for(let i = 0; i < itemRowList.length; i++){
+        await itemRowList[i].assertProductDataAccuracyInRow(productsList[i]);
+      }
+
+      await cart.checkoutButton.click();
+      
+      // checkout 2
+      const personalCheckout = new CheckoutPersonal(page);
+      await personalCheckout.fillCorrectData();
+      await personalCheckout.continue.click();
+
+      // checkout summary
+      const checkoutSummary = new CheckoutSummary(page);
+      const summaryItemList: ItemView[] = await checkoutSummary.getItemsList(); 
+      console.log('summaryItemList: ', summaryItemList);
+      for(let i = 0; i < summaryItemList.length; i++){
+        await summaryItemList[0].assertProductDataAccuracyInRow(productsList[0]);
+      }
+      const itemsCalculated = productsList.reduce((sum, product) => sum + product.price, 0);
+      const itemsTaxCalculated = productsList.reduce((sum, product) => sum + product.tax, 0);
+      expect(await checkoutSummary.itemTotalCost.textContent()).toContain("Item total: $" + itemsCalculated);
+      expect(await checkoutSummary.taxCost.textContent()).toContain(itemsTaxCalculated.toFixed(2));
+      expect(await checkoutSummary.totalCost.textContent()).toContain("Total: $" + (itemsCalculated+itemsTaxCalculated).toFixed(2));
+
   });
 
 });
