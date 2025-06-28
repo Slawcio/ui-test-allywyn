@@ -2,7 +2,7 @@ import { faker } from "@faker-js/faker";
 import { LoginOutcome, loginTestData } from "../data/data";
 import { test } from "@playwright/test";
 import { AuthPage}  from "../../pages/dom-pages/auth-page";
-import { Inventory } from "../../pages/dom-pages/inventory-page";
+import { Inventory } from "../../pages/dom-pages/product-pages/inventory-page";
 
 const names = loginTestData.name;
 
