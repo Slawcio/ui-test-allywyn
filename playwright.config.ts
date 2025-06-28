@@ -30,18 +30,6 @@ export default defineConfig({
     ['json', { outputFile: 'playwright-report/report.json' }]
   ],
   snapshotPathTemplate: 'tests/e2e/snapshots/{projectName}/{testFilePath}/{arg}{ext}',
-  expect: {
-    toHaveScreenshot: {
-      threshold: 0.5,
-      maxDiffPixelRatio: 0.05,
-      maxDiffPixels: 25,
-    },
-    toMatchSnapshot: {
-      threshold: 0.25,
-      maxDiffPixelRatio: 0.025,
-      maxDiffPixels: 25,
-    }
-  },
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
