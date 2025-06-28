@@ -59,10 +59,6 @@ jobs:
         run: |
           echo "ENV=${{ secrets.ENV }}" >> .env
 
-      - name: Initialize snapshots
-        if: ${{steps.cache.outputs.cache-hit != 'true' || inputs.update-snapshots == 'true'}}
-        run: npx playwright test --update-snapshots --reporter html
-
       - name: Run smoke tests on all browsers
         run: npx playwright test --grep @smoke
 
