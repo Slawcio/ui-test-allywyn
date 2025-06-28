@@ -4,20 +4,6 @@ on:
   pull_request:
     branches: [master, develop]
 
-  # Allow updating snapshots during manual runs
-  workflow_call:
-    inputs:
-      update-snapshots:
-        description: "Update snapshots?"
-        type: boolean
-  
-  # Allow updating snapshots during automatic runs
-  workflow_dispatch: 
-    inputs:
-      update-snapshots:
-        description: "Update snapshots?"
-        type: boolean
-
 jobs:
   test:
     timeout-minutes: 15
@@ -60,7 +46,7 @@ jobs:
           echo "ENV=${{ secrets.ENV }}" >> .env
 
       - name: Run smoke tests on all browsers
-        run: npx playwright test --grep @smoke --update-snapshots --reporter html
+        run: npx playwright test --grep @smoke --ignore-snapshots
 
       - name: Upload Playwright report
         if: always()
