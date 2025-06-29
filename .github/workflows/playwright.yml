@@ -55,9 +55,10 @@ jobs:
           restore-keys: cache/${{github.repository}}/refs/heads/master
           path: tests/snapshots/
 
-      - name: Initialize snapshots
-        if: ${{steps.cache.outputs.cache-hit != 'true'}}
-        run: npx playwright test --grep @visual --update-snapshots
+      # todo later
+      # - name: Initialize snapshots
+      #   if: ${{steps.cache.outputs.cache-hit != 'true'}}
+      #   run: npx playwright test --grep @visual --update-snapshots
 
       - name: Run smoke tests on all browsers
         run: npx playwright test --ignore-snapshots
