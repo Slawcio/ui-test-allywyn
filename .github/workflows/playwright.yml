@@ -38,6 +38,7 @@ jobs:
         run: npm ci
 
       - name: Install Playwright browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps
 
       - name: Create .env file
@@ -57,7 +58,7 @@ jobs:
       #   if: ${{steps.cache.outputs.cache-hit != 'true'}}
       #   run: npx playwright test --grep @visual --update-snapshots
 
-      - name: Run smoke tests on all browsers
+      - name: Run all tests on all browsers
         run: npx playwright test --ignore-snapshots
 
       - name: Upload Playwright report
