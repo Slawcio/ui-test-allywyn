@@ -22,23 +22,14 @@ jobs:
         id: node_cache
         uses: actions/cache@v4
         with:
-          path: |
-            node_modules
+          path: node_modules
           key: node-modules-${{ hashFiles('package-lock.json') }}
-
-      - name: Cache Playwright browsers
-        id: playwright-cache
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
 
       - name: Install dependencies
         if: steps.node_cache.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Install Playwright browsers
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps
 
       - name: Create .env file
@@ -47,6 +38,20 @@ jobs:
 
       - name: Run smoke tests on all browsers
         run: npx playwright test --grep @smoke --ignore-snapshots
+
+      - name: Copy HTML report to output folder
+        run: |
+          mkdir -p ./gh-pages
+          cp -r playwright-report/* ./gh-pages/
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: ./gh-pages
+
+      - name: Deploy to GitHub Pages
+        if: github.ref == 'refs/heads/master'
+        uses: actions/deploy-pages@v2
 
       - name: Upload Playwright report
         if: always()

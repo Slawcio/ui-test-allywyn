@@ -11,7 +11,7 @@ test.describe('visual regression tests', {tag: ['@visual', '@smoke']},() => {
         await openPage(page, URLS.INVENTORY);
         const inventory = new Inventory(page);
         await inventory.assertAllPageLocatorsVisible();
-        await expect(inventory.root).toHaveScreenshot();
+        await expect(page).toHaveScreenshot();
     });
 
     for(const product of Object.values(products)){
@@ -24,7 +24,7 @@ test.describe('visual regression tests', {tag: ['@visual', '@smoke']},() => {
             const productPage = new Product(page);
             productPage.assertAllPageLocatorsVisible();
 
-            await expect(productPage.root).toHaveScreenshot();
+            await expect(page).toHaveScreenshot();
         });
     }
 
