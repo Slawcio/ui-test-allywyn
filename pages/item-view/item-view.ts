@@ -58,8 +58,6 @@ export class ItemView extends BasePage {
 
     // compare data with predefined product in row
     async assertProductDataAccuracyInRow(productData: ProductType): Promise<void>{
-        console.log('productData: ', productData)
-        console.log('this.price: ', this.price);
         expect(await this.price.textContent()).toContain(productData.price.toString());
         expect(await this.name.textContent()).toContain(productData.name);
         expect(await this.description.textContent()).toContain(productData.desc);

@@ -5,13 +5,13 @@ import { Inventory } from "../../pages/dom-pages/product-pages/inventory-page";
 import { Product } from "../../pages/dom-pages/product-pages/product-page";
 
 // TODO
-test.describe('visual regression tests', {tag: ['@visual']},() => {
+test.describe('visual regression tests', {tag: ['@visual', '@smoke']},() => {
 
     test('inventory page', async ({page}) => {
         await openPage(page, URLS.INVENTORY);
         const inventory = new Inventory(page);
-        
-        await expect(inventory.root).toHaveScreenshot();
+        await inventory.assertAllPageLocatorsVisible();
+        await expect(page).toHaveScreenshot();
     });
 
     for(const product of Object.values(products)){
@@ -24,7 +24,7 @@ test.describe('visual regression tests', {tag: ['@visual']},() => {
             const productPage = new Product(page);
             productPage.assertAllPageLocatorsVisible();
 
-            await expect(productPage.root).toHaveScreenshot();
+            await expect(page).toHaveScreenshot();
         });
     }
 
