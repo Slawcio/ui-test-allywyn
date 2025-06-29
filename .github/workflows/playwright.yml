@@ -46,22 +46,22 @@ jobs:
           echo "ENV=${{ secrets.ENV }}" >> .env
 
       - name: Clean snapshots
-        run: rm -rf tests/snapshots/
-        
+        run: rm -rf tests/snapshots
+
       - name: Set up cache
         id: cache
         uses: actions/cache@v4
         with:
           key: cache/${{github.repository}}/${{github.ref}}
           restore-keys: cache/${{github.repository}}/refs/heads/master
-          path: tests/e2e/snapshots/
+          path: tests/snapshots/
 
       - name: Initialize snapshots
         if: ${{steps.cache.outputs.cache-hit != 'true'}}
-        run: npx playwright test --update-snapshots
+        run: npx playwright test --grep @visual --update-snapshots
 
       - name: Run smoke tests on all browsers
-        run: npx playwright test --grep @smoke --ignore-snapshots
+        run: npx playwright test --ignore-snapshots
 
       - name: Upload Playwright report
         if: always()
