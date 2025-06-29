@@ -16,13 +16,5 @@ export class ParsedProduct {
         const imgSrc = await itemInventory.img.getAttribute('src');
         return new ParsedProduct(name?.trim() || '', description?.trim() || '', price?.trim() || '', imgSrc?.trim() || '');
     }
-  
-    // async assertEqualToProductPage(productPage: Product) {
-    //     const item = productPage.
-    //     await expect(productPage.name).toHaveText(this.name);
-    //     await expect(productPage.description).toHaveText(this.description);
-    //     await expect(productPage.price).toHaveText(this.price);
-    //     expect(await productPage.img.getAttribute('src')).toBe(this.imgSrc);
-    // }
 
 }

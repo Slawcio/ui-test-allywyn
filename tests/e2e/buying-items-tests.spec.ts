@@ -12,7 +12,7 @@ import { ProductType } from '../../types';
 import { ItemView } from '../../pages/item-view/item-view';
 import { HeaderView } from '../../pages/header-view/header';
 
-test.describe('Buying tests', {tag: ['@buy-functionality']},() => {
+test.describe('Buying tests', {tag: ['@buy-functionality', '@smoke']},() => {
   
   test.beforeEach(async ({ page }) => {
     await openPage(page, '/inventory.html');
@@ -122,7 +122,6 @@ test.describe('Buying tests', {tag: ['@buy-functionality']},() => {
       // checkout summary
       const checkoutSummary = new CheckoutSummary(page);
       const summaryItemList: ItemView[] = await checkoutSummary.getItemsList(); 
-      console.log('summaryItemList: ', summaryItemList);
       for(let i = 0; i < summaryItemList.length; i++){
         await summaryItemList[0].assertProductDataAccuracyInRow(productsList[0]);
       }

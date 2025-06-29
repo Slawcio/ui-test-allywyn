@@ -50,16 +50,17 @@ npm run test
 To run with tags
 ```sh
 npx playwright test --grep @my_tag
-#or
-npm run test --grep @my_tag
 ```
 
 To run a specific scenario:
 ```sh
 npx playwright test file_name.spec.ts
-#or
-npm run test file_name.spec.ts
 ```
+
+Update visual comparison snapshots
+```sh
+ npx playwright test -u
+ ```
 
 ### Test Structure
 
@@ -90,10 +91,12 @@ to open reporter based on latest tests results
 
 - redirecting of burger menu and back buttons
 - personal checkout validations
-- storage-state for all test users -> enabling to run all of them
-- extract test users to .env probably (security)
-- some refactoring eg extracitng some of e2e buying process into `test.steps`
+- `storage-state` for all test users -> enabling to run all of them
+- extract test users to `.env` probably (security)
+- some refactoring eg extracting some of e2e buying process into `test.steps`
 - github actions
+- propose some e2e `*.spec.ts` files grouping
+- more wise `tag` management
 
 ### General folder mapping
 ```text
